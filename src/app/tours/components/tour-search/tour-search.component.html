@@ -1,0 +1,129 @@
+<div class="tour-search-container">
+  <h2 class="section-title">Find Your Perfect Tour</h2>
+  
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+    <!-- Basic Search Fields -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="destination">Destination</label>
+        <input
+          type="text"
+          id="destination"
+          formControlName="destination"
+          class="form-control"
+          placeholder="Where do you want to go?"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" formControlName="category" class="form-control">
+          <option value="">All Categories</option>
+          <option value="SAFARI">Safari</option>
+          <option value="BEACH">Beach</option>
+          <option value="CULTURAL">Cultural</option>
+          <option value="ADVENTURE">Adventure</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" formControlName="difficulty" class="form-control">
+          <option value="">All Difficulties</option>
+          <option value="EASY">Easy</option>
+          <option value="MODERATE">Moderate</option>
+          <option value="CHALLENGING">Challenging</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Advanced Search Toggle -->
+    <div class="advanced-search-toggle" (click)="toggleAdvancedSearch()">
+      Advanced Search Options
+      <i class="fas" [class.fa-chevron-down]="!showAdvancedSearch" [class.fa-chevron-up]="showAdvancedSearch"></i>
+    </div>
+    
+    <!-- Advanced Search Options -->
+    <div class="advanced-search-options" *ngIf="showAdvancedSearch">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="priceRange">Price Range</label>
+          <div class="price-range">
+            <input
+              type="number"
+              id="minPrice"
+              formControlName="minPrice"
+              class="form-control"
+              placeholder="Min Price"
+            >
+            <span>to</span>
+            <input
+              type="number"
+              id="maxPrice"
+              formControlName="maxPrice"
+              class="form-control"
+              placeholder="Max Price"
+            >
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="duration">Duration (days)</label>
+          <input
+            type="number"
+            id="duration"
+            formControlName="duration"
+            class="form-control"
+            placeholder="Number of days"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="groupSize">Group Size</label>
+          <input
+            type="number"
+            id="groupSize"
+            formControlName="groupSize"
+            class="form-control"
+            placeholder="Number of people"
+          >
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="isPopular">
+            Popular Tours Only
+          </label>
+        </div>
+        
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="hasDiscount">
+            Special Offers
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Search Button -->
+    <div class="form-row">
+      <div class="form-group search-button-container">
+        <button type="submit" class="search-button" [disabled]="searchForm.invalid">
+          <i class="fas fa-search"></i>
+          Search Tours
+        </button>
+      </div>
+    </div>
+  </form>
+  
+  <!-- Active Search Tags -->
+  <div class="search-tags" *ngIf="hasActiveFilters()">
+    <div class="tag" *ngFor="let filter of getActiveFilters()">
+      {{ filter.label }}: {{ filter.value }}
+      <i class="fas fa-times" (click)="removeFilter(filter.key)"></i>
+    </div>
+    <button class="clear-all" (click)="clearAllFilters()">Clear All</button>
+  </div>
+</div> 

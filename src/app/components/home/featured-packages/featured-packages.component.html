@@ -1,0 +1,156 @@
+<!-- Featured Packages Section -->
+<section class="featured-packages">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">Featured Tour Packages</h2>
+      <p class="section-description">Discover our handpicked selection of unforgettable African adventures</p>
+    </div>
+
+    <!-- Package Filter -->
+    <div class="package-filter" data-aos="fade-up" data-aos-delay="100">
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'all'"
+        (click)="filterPackages('all')"
+        aria-label="Show all packages">
+        All Packages
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'safari'"
+        (click)="filterPackages('safari')"
+        aria-label="Show safari packages">
+        Safari
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'beach'"
+        (click)="filterPackages('beach')"
+        aria-label="Show beach packages">
+        Beach
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'cultural'"
+        (click)="filterPackages('cultural')"
+        aria-label="Show cultural packages">
+        Cultural
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'adventure'"
+        (click)="filterPackages('adventure')"
+        aria-label="Show adventure packages">
+        Adventure
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading" data-aos="fade-up">
+      <div class="spinner"></div>
+      <p>Loading packages...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error" data-aos="fade-up">
+      <div class="error-message">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>{{ errorMessage }}</p>
+        <button class="retry-btn" (click)="loadPackages()">Try Again</button>
+      </div>
+    </div>
+
+    <!-- Packages Grid -->
+    <div class="packages-grid" *ngIf="!isLoading && !error">
+      <div 
+        *ngFor="let pkg of filteredPackages" 
+        class="package-card"
+        [attr.data-aos]="'fade-up'"
+        [attr.data-aos-delay]="pkg.delay"
+        [routerLink]="['/packages', pkg.slug]"
+        tabindex="0"
+        role="article"
+        [attr.aria-label]="pkg.name">
+        
+        <!-- Package Image -->
+        <div class="package-image">
+          <div class="image-placeholder" *ngIf="imageLoadingStates[pkg.id]"></div>
+          <img 
+            [src]="pkg.imageUrl" 
+            [alt]="pkg.name"
+            (load)="onImageLoad(pkg.id)"
+            (error)="onImageError(pkg.id)"
+            loading="lazy">
+          
+          <!-- Popular Badge -->
+          <span class="popular-badge" *ngIf="pkg.isPopular">Popular</span>
+          
+          <!-- Discount Badge -->
+          <span class="discount-badge" *ngIf="pkg.discount">
+            {{ pkg.discount }}% OFF
+          </span>
+          
+          <!-- Favorite Button -->
+          <button 
+            class="favorite-btn"
+            (click)="toggleFavorite(pkg, $event)"
+            [attr.aria-label]="pkg.isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+            [attr.aria-pressed]="pkg.isFavorite">
+            <i class="bi" [ngClass]="getFavoriteIconClass(pkg.isFavorite)"></i>
+          </button>
+        </div>
+
+        <!-- Package Content -->
+        <div class="package-content">
+          <h3 class="package-name">{{ pkg.name }}</h3>
+          <p class="package-description">{{ pkg.description }}</p>
+          
+          <!-- Package Features -->
+          <div class="package-features">
+            <span class="feature">
+              <i class="bi bi-clock"></i>
+              {{ pkg.duration }}
+            </span>
+            <span class="feature">
+              <i class="bi bi-people"></i>
+              {{ pkg.groupSize }}
+            </span>
+            <span class="feature">
+              <i class="bi bi-star-fill"></i>
+              {{ pkg.rating }}
+            </span>
+          </div>
+          
+          <!-- Package Type Tags -->
+          <div class="package-tags">
+            <span 
+              *ngFor="let type of pkg.type" 
+              class="tag"
+              [class]="'tag-' + type">
+              {{ type }}
+            </span>
+          </div>
+          
+          <!-- Package Price -->
+          <div class="package-price">
+            <span class="price">{{ formatPrice(pkg.price) }}</span>
+            <span class="per-person">per person</span>
+          </div>
+          
+          <!-- View Details Button -->
+          <button class="view-details-btn">
+            View Details
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" *ngIf="!isLoading && !error && filteredPackages.length === 0" data-aos="fade-up">
+      <i class="bi bi-search"></i>
+      <p>No packages found matching your criteria</p>
+      <button class="reset-btn" (click)="filterPackages('all')">Show All Packages</button>
+    </div>
+  </div>
+</section>

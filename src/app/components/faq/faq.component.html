@@ -1,0 +1,75 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-header-content">
+          <h1>Frequently Asked Questions</h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header-shape">
+    <img src="assets/images/patterns/shape-bottom.svg" alt="Shape">
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section section-padding">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section-title text-center mb-5" data-aos="fade-up">
+          <h2>Common Questions</h2>
+          <p>Find answers to frequently asked questions about our safaris and tours</p>
+        </div>
+        
+        <div class="faq-accordion" data-aos="fade-up">
+          <div class="accordion-item" *ngFor="let faq of faqs; let i = index">
+            <h2 class="accordion-header" [id]="'faqHeading' + i">
+              <button 
+                class="accordion-button" 
+                [class.collapsed]="!faq.isOpen" 
+                type="button" 
+                (click)="toggleFaq(i)"
+                [attr.aria-expanded]="faq.isOpen ? 'true' : 'false'" 
+                [attr.aria-controls]="'faqCollapse' + i">
+                {{faq.question}}
+              </button>
+            </h2>
+            <div 
+              [id]="'faqCollapse' + i" 
+              class="accordion-collapse collapse" 
+              [class.show]="faq.isOpen" 
+              [attr.aria-labelledby]="'faqHeading' + i">
+              <div class="accordion-body">
+                {{faq.answer}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA Section -->
+<section class="cta-section section-padding bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center" data-aos="fade-up">
+        <h2>Still Have Questions?</h2>
+        <p class="mb-4">Our team is here to help you plan your perfect African adventure</p>
+        <a routerLink="/contact" class="btn btn-primary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-newsletter></app-newsletter> 

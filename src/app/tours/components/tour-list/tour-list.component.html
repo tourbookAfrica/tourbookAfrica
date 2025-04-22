@@ -1,0 +1,51 @@
+<div class="tour-list-container">
+  <div class="filters">
+    <div class="filter-group">
+      <label for="category">Category:</label>
+      <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange($event.target.value)">
+        <option value="all">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{category | titlecase}}
+        </option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="difficulty">Difficulty:</label>
+      <select id="difficulty" [(ngModel)]="selectedDifficulty" (change)="onDifficultyChange($event.target.value)">
+        <option value="all">All Difficulties</option>
+        <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+          {{difficulty | titlecase}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tours-grid" *ngIf="!loading && !error">
+    <div class="tour-card" *ngFor="let tour of tours">
+      <img [src]="tour.images[0]" [alt]="tour.name" class="tour-image">
+      <div class="tour-content">
+        <h3>{{tour.name}}</h3>
+        <p class="location">{{tour.destination}}</p>
+        <p class="description">{{tour.description}}</p>
+        <div class="tour-details">
+          <span class="duration">{{tour.duration}} days</span>
+          <span class="price">{{tour.price | currency:tour.currency}}</span>
+          <div class="rating">
+            <span class="stars">{{'★'.repeat(Math.floor(tour.rating))}}{{'☆'.repeat(5 - Math.floor(tour.rating))}}</span>
+            <span class="review-count">({{tour.reviews}} reviews)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading tours...</p>
+  </div>
+
+  <div class="error" *ngIf="error">
+    <p>{{error}}</p>
+    <button (click)="loadTours()">Try Again</button>
+  </div>
+</div> 

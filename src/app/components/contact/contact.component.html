@@ -1,0 +1,319 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-header-content">
+          <h1>Contact Us</h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header-shape">
+    <img src="assets/images/patterns/shape-bottom.svg" alt="Shape">
+  </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="contact-info-section section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="contact-info-card">
+          <div class="contact-info-icon">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <h3>Our Locations</h3>
+          <div class="contact-info-item">
+            <h4>Nairobi Office (Headquarters)</h4>
+            <p>Kimathi Street, Nairobi CBD<br>P.O. Box 12345-00100<br>Nairobi, Kenya</p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Arusha Office</h4>
+            <p>Sokoine Road, City Center<br>P.O. Box 2468<br>Arusha, Tanzania</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="contact-info-card">
+          <div class="contact-info-icon">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+          <h3>Call Us</h3>
+          <div class="contact-info-item">
+            <h4>Customer Support</h4>
+            <p>
+              <a href="tel:+254700123456">+254 700 123 456</a><br>
+              <a href="tel:+255765432100">+255 765 432 100</a>
+            </p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Booking Inquiries</h4>
+            <p>
+              <a href="tel:+254733987654">+254 733 987 654</a><br>
+              <a href="tel:+255789012345">+255 789 012 345</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="contact-info-card">
+          <div class="contact-info-icon">
+            <i class="bi bi-envelope-fill"></i>
+          </div>
+          <h3>Email Us</h3>
+          <div class="contact-info-item">
+            <h4>General Inquiries</h4>
+            <p>
+              <a href="mailto:info@africantrails.com">info@africantrails.com</a>
+            </p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Bookings & Reservations</h4>
+            <p>
+              <a href="mailto:bookings@africantrails.com">bookings@africantrails.com</a>
+            </p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Customer Support</h4>
+            <p>
+              <a href="mailto:support@africantrails.com">support@africantrails.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="contact-form-section section-padding bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="contact-form-wrapper">
+          <div class="section-title">
+            <h2>Get in Touch</h2>
+            <p>We'd love to hear from you</p>
+          </div>
+          
+          <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="formSubmitted">
+            <strong>Thank you!</strong> Your message has been sent successfully. We'll get back to you soon.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="formSubmitted = false"></button>
+          </div>
+          
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="formError">
+            <strong>Error!</strong> {{ errorMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="formError = false"></button>
+          </div>
+          
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Your Name <span class="required">*</span></label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    class="form-control" 
+                    formControlName="name" 
+                    [ngClass]="{'is-invalid': submitted && f.name.errors}"
+                    placeholder="Enter your name">
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Name is required</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="email">Your Email <span class="required">*</span></label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    class="form-control" 
+                    formControlName="email" 
+                    [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                    placeholder="Enter your email">
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.email">Please enter a valid email address</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Subject <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="subject" 
+                class="form-control" 
+                formControlName="subject" 
+                [ngClass]="{'is-invalid': submitted && f.subject.errors}"
+                placeholder="Enter subject">
+              <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+                <div *ngIf="f.subject.errors.required">Subject is required</div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Your Message <span class="required">*</span></label>
+              <textarea 
+                id="message" 
+                class="form-control" 
+                formControlName="message" 
+                [ngClass]="{'is-invalid': submitted && f.message.errors}"
+                rows="6" 
+                placeholder="Type your message here..."></textarea>
+              <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                <div *ngIf="f.message.errors.required">Message is required</div>
+              </div>
+            </div>
+            
+            <div class="form-group form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                id="privacy" 
+                formControlName="privacy" 
+                [ngClass]="{'is-invalid': submitted && f.privacy.errors}">
+              <label class="form-check-label" for="privacy">
+                I agree to the <a href="#">privacy policy</a> and <a href="#">terms of service</a>
+              </label>
+              <div *ngIf="submitted && f.privacy.errors" class="invalid-feedback">
+                <div *ngIf="f.privacy.errors.required">You must agree to the privacy policy</div>
+              </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" [disabled]="loading">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="contact-map-wrapper">
+          <div class="section-title">
+            <h2>Find Us</h2>
+            <p>Visit our offices</p>
+          </div>
+          
+          <div class="contact-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8176213990805!2d36.81984761475772!3d-1.2841924359777297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d8eeeaee53%3A0xf2beef4658dc1bc8!2sKimathi%20St%2C%20Nairobi!5e0!3m2!1sen!2ske!4v1620123456789!5m2!1sen!2ske" 
+              width="100%" 
+              height="450" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy"
+              title="African Trails Nairobi Office">
+            </iframe>
+            <div class="map-fallback" *ngIf="!mapLoaded">
+              <p>Unable to load map. Please try again later.</p>
+              <button class="btn btn-outline-primary" (click)="loadMap()">Reload Map</button>
+            </div>
+          </div>
+          
+          <div class="office-hours mt-4">
+            <h3>Office Hours</h3>
+            <div class="hours-grid">
+              <div class="day">Monday - Friday:</div>
+              <div class="time">8:00 AM - 6:00 PM</div>
+              
+              <div class="day">Saturday:</div>
+              <div class="time">9:00 AM - 4:00 PM</div>
+              
+              <div class="day">Sunday:</div>
+              <div class="time">Closed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section section-padding">
+  <div class="container">
+    <div class="section-title text-center" data-aos="fade-up">
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers to common inquiries</p>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="accordion faq-accordion" id="faqAccordion" data-aos="fade-up">
+          <div class="accordion-item" *ngFor="let faq of faqs; let i = index">
+            <h2 class="accordion-header" [id]="'faqHeading' + i">
+              <button 
+                class="accordion-button" 
+                [class.collapsed]="i !== 0" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                [attr.data-bs-target]="'#faqCollapse' + i" 
+                [attr.aria-expanded]="i === 0 ? 'true' : 'false'" 
+                [attr.aria-controls]="'faqCollapse' + i">
+                {{faq.question}}
+              </button>
+            </h2>
+            <div 
+              [id]="'faqCollapse' + i" 
+              class="accordion-collapse collapse" 
+              [class.show]="i === 0" 
+              [attr.aria-labelledby]="'faqHeading' + i" 
+              data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                {{faq.answer}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Social Connect Section -->
+<section class="social-connect section-padding bg-light">
+  <div class="container">
+    <div class="section-title text-center" data-aos="fade-up">
+      <h2>Connect With Us</h2>
+      <p>Follow us on social media for updates and inspiration</p>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="social-icons" data-aos="fade-up">
+          <a href="https://facebook.com/" target="_blank" class="social-icon facebook" aria-label="Facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="https://twitter.com/" target="_blank" class="social-icon twitter" aria-label="Twitter">
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a href="https://instagram.com/" target="_blank" class="social-icon instagram" aria-label="Instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="https://youtube.com/" target="_blank" class="social-icon youtube" aria-label="YouTube">
+            <i class="bi bi-youtube"></i>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" class="social-icon linkedin" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-newsletter></app-newsletter> 

@@ -1,0 +1,308 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>Find Your Perfect Ride</h1>
+    <p>Explore Africa with the freedom of your own wheels</p>
+  </div>
+</section>
+
+<!-- Search Section -->
+<section class="search-section">
+  <div class="container">
+    <form [formGroup]="carSearchForm" (ngSubmit)="onSubmit()" class="search-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pickupLocation">Pick-up Location</label>
+          <div class="input-group">
+            <i class="fas fa-map-marker-alt"></i>
+            <input
+              type="text"
+              id="pickupLocation"
+              formControlName="pickupLocation"
+              placeholder="Where will you pick up the car?"
+              [class.is-invalid]="carSearchForm.get('pickupLocation')?.invalid && carSearchForm.get('pickupLocation')?.touched"
+            >
+            <!-- Autocomplete dropdown -->
+            <div class="autocomplete-dropdown" *ngIf="pickupSuggestions.length > 0">
+              <div 
+                class="autocomplete-item" 
+                *ngFor="let destination of pickupSuggestions"
+                (click)="selectPickupLocation(destination)">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="destination-info">
+                  <span class="destination-name">{{ destination.name }}</span>
+                  <span class="destination-location">{{ destination.city }}, {{ destination.country }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('pickupLocation')?.invalid && carSearchForm.get('pickupLocation')?.touched">
+            Please select a pick-up location
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dropoffLocation">Drop-off Location</label>
+          <div class="input-group">
+            <i class="fas fa-map-marker-alt"></i>
+            <input
+              type="text"
+              id="dropoffLocation"
+              formControlName="dropoffLocation"
+              placeholder="Where will you return the car?"
+              [class.is-invalid]="carSearchForm.get('dropoffLocation')?.invalid && carSearchForm.get('dropoffLocation')?.touched"
+            >
+            <!-- Autocomplete dropdown -->
+            <div class="autocomplete-dropdown" *ngIf="dropoffSuggestions.length > 0">
+              <div 
+                class="autocomplete-item" 
+                *ngFor="let destination of dropoffSuggestions"
+                (click)="selectDropoffLocation(destination)">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="destination-info">
+                  <span class="destination-name">{{ destination.name }}</span>
+                  <span class="destination-location">{{ destination.city }}, {{ destination.country }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('dropoffLocation')?.invalid && carSearchForm.get('dropoffLocation')?.touched">
+            Please select a drop-off location
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pickupDate">Pick-up Date</label>
+          <div class="input-group">
+            <i class="fas fa-calendar"></i>
+            <input
+              type="date"
+              id="pickupDate"
+              formControlName="pickupDate"
+              [min]="today"
+              [class.is-invalid]="carSearchForm.get('pickupDate')?.invalid && carSearchForm.get('pickupDate')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('pickupDate')?.invalid && carSearchForm.get('pickupDate')?.touched">
+            Please select a pick-up date
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pickupTime">Pick-up Time</label>
+          <div class="input-group">
+            <i class="fas fa-clock"></i>
+            <input
+              type="time"
+              id="pickupTime"
+              formControlName="pickupTime"
+              [class.is-invalid]="carSearchForm.get('pickupTime')?.invalid && carSearchForm.get('pickupTime')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('pickupTime')?.invalid && carSearchForm.get('pickupTime')?.touched">
+            Please select a pick-up time
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dropoffDate">Drop-off Date</label>
+          <div class="input-group">
+            <i class="fas fa-calendar"></i>
+            <input
+              type="date"
+              id="dropoffDate"
+              formControlName="dropoffDate"
+              [min]="carSearchForm.get('pickupDate')?.value"
+              [class.is-invalid]="carSearchForm.get('dropoffDate')?.invalid && carSearchForm.get('dropoffDate')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('dropoffDate')?.invalid && carSearchForm.get('dropoffDate')?.touched">
+            Please select a drop-off date
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dropoffTime">Drop-off Time</label>
+          <div class="input-group">
+            <i class="fas fa-clock"></i>
+            <input
+              type="time"
+              id="dropoffTime"
+              formControlName="dropoffTime"
+              [class.is-invalid]="carSearchForm.get('dropoffTime')?.invalid && carSearchForm.get('dropoffTime')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('dropoffTime')?.invalid && carSearchForm.get('dropoffTime')?.touched">
+            Please select a drop-off time
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="driverAge">Driver's Age</label>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input
+              type="number"
+              id="driverAge"
+              formControlName="driverAge"
+              min="21"
+              max="99"
+              [class.is-invalid]="carSearchForm.get('driverAge')?.invalid && carSearchForm.get('driverAge')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="carSearchForm.get('driverAge')?.invalid && carSearchForm.get('driverAge')?.touched">
+            Driver must be between 21 and 99 years old
+          </div>
+        </div>
+
+        <div class="form-group search-button">
+          <button type="submit" class="btn btn-primary" [disabled]="carSearchForm.invalid || loading">
+            <i class="fas fa-search"></i>
+            {{ loading ? 'Searching...' : 'Search Cars' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section" *ngIf="cars.length > 0">
+  <div class="container">
+    <div class="filters">
+      <h3>Filters</h3>
+      <div class="filter-group">
+        <h4>Price Range</h4>
+        <div class="price-range">
+          <input type="range" min="0" max="1000" [(ngModel)]="filters.priceRange.min" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+          <span>{{ filters.priceRange.min | currency }}</span>
+          <input type="range" min="0" max="1000" [(ngModel)]="filters.priceRange.max" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+          <span>{{ filters.priceRange.max | currency }}</span>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Car Type</h4>
+        <div class="checkbox-group">
+          <label *ngFor="let type of carTypes">
+            <input type="checkbox" [value]="type" [(ngModel)]="filters.carType" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+            {{ type }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Transmission</h4>
+        <div class="checkbox-group">
+          <label *ngFor="let transmission of transmissions">
+            <input type="checkbox" [value]="transmission" [(ngModel)]="filters.transmission" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+            {{ transmission }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Features</h4>
+        <div class="checkbox-group">
+          <label *ngFor="let feature of features">
+            <input type="checkbox" [value]="feature" [(ngModel)]="filters.features" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+            {{ feature }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Rating</h4>
+        <div class="rating-filter">
+          <input type="range" min="0" max="5" step="0.5" [(ngModel)]="filters.rating" [ngModelOptions]="{standalone: true}" (change)="applyFilters()">
+          <span>{{ filters.rating }} stars</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cars-grid">
+      <div class="car-card" *ngFor="let car of filteredCars">
+        <div class="car-image">
+          <img [src]="car.image" [alt]="car.name">
+          <div class="car-badge" *ngIf="car.isPopular">Popular</div>
+        </div>
+        <div class="car-details">
+          <h3>{{ car.name }}</h3>
+          <div class="car-specs">
+            <span><i class="fas fa-cog"></i> {{ car.transmission }}</span>
+            <span><i class="fas fa-gas-pump"></i> {{ car.fuelType }}</span>
+            <span><i class="fas fa-users"></i> {{ car.seats }} seats</span>
+          </div>
+          <div class="car-features">
+            <span *ngFor="let feature of car.features">
+              <i class="fas fa-check"></i> {{ feature }}
+            </span>
+          </div>
+          <div class="car-rating">
+            <div class="stars">
+              <i class="fas fa-star" *ngFor="let star of [].constructor(Math.floor(car.rating))"></i>
+              <i class="fas fa-star-half-alt" *ngIf="car.rating % 1 !== 0"></i>
+              <i class="far fa-star" *ngFor="let star of [].constructor(5 - Math.ceil(car.rating))"></i>
+            </div>
+            <span>({{ car.reviews }} reviews)</span>
+          </div>
+          <div class="car-price">
+            <span class="price">{{ car.price | currency }}/day</span>
+            <button class="btn btn-primary" [routerLink]="['/car-rentals', car.id]">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button 
+        class="btn btn-secondary" 
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)">
+        Previous
+      </button>
+      <div class="page-numbers">
+        <button 
+          class="btn" 
+          [class.active]="page === currentPage"
+          *ngFor="let page of pages"
+          (click)="onPageChange(page)">
+          {{ page }}
+        </button>
+      </div>
+      <button 
+        class="btn btn-secondary" 
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)">
+        Next
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- No Results Message -->
+<div class="no-results" *ngIf="!loading && cars.length === 0">
+  <div class="container">
+    <i class="fas fa-car"></i>
+    <h2>No cars found</h2>
+    <p>Try adjusting your search criteria or filters</p>
+  </div>
+</div>
+
+<!-- Loading Spinner -->
+<div class="loading-spinner" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Searching for cars...</p>
+</div>
+
+<!-- Error Message -->
+<div class="error-message" *ngIf="error">
+  <div class="container">
+    <i class="fas fa-exclamation-circle"></i>
+    <p>{{ error }}</p>
+  </div>
+</div> 

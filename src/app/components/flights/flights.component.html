@@ -1,0 +1,309 @@
+<!-- Flight Search Section -->
+<section class="flight-search-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-body p-4">
+            <h2 class="text-center mb-4">Find Your Perfect Flight</h2>
+            
+            <!-- Trip Type Selection -->
+            <div class="trip-type-selector mb-4">
+              <div class="btn-group w-100" role="group">
+                <button type="button" 
+                        class="btn btn-outline-primary" 
+                        [class.active]="tripType === 'roundTrip'"
+                        (click)="setTripType('roundTrip')">
+                  <i class="fas fa-exchange-alt me-2"></i>Round Trip
+                </button>
+                <button type="button" 
+                        class="btn btn-outline-primary" 
+                        [class.active]="tripType === 'oneWay'"
+                        (click)="setTripType('oneWay')">
+                  <i class="fas fa-plane me-2"></i>One Way
+                </button>
+                <button type="button" 
+                        class="btn btn-outline-primary" 
+                        [class.active]="tripType === 'multiCity'"
+                        (click)="setTripType('multiCity')">
+                  <i class="fas fa-map-marked-alt me-2"></i>Multi-City
+                </button>
+              </div>
+            </div>
+            
+            <!-- Flight Search Form -->
+            <form [formGroup]="flightForm" (ngSubmit)="onSubmit()" class="flight-search-form">
+              <div class="form-row">
+                <!-- Departure Airport -->
+                <div class="form-group position-relative">
+                  <label for="departure">From</label>
+                  <input type="text" 
+                         id="departure" 
+                         formControlName="departure" 
+                         placeholder="City or Airport"
+                         (input)="filterAirports($event.target.value, 'departure')"
+                         (focus)="showDepartureDropdown = true">
+                  
+                  <!-- Departure Airport Dropdown -->
+                  <div class="airport-dropdown" *ngIf="showDepartureDropdown && filteredAirports.length > 0">
+                    <div class="airport-option" 
+                         *ngFor="let airport of filteredAirports"
+                         (click)="onAirportSelect(airport, 'departure')">
+                      {{ getAirportDisplay(airport) }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Arrival Airport -->
+                <div class="form-group position-relative">
+                  <label for="arrival">To</label>
+                  <input type="text" 
+                         id="arrival" 
+                         formControlName="arrival" 
+                         placeholder="City or Airport"
+                         (input)="filterAirports($event.target.value, 'arrival')"
+                         (focus)="showArrivalDropdown = true">
+                  
+                  <!-- Arrival Airport Dropdown -->
+                  <div class="airport-dropdown" *ngIf="showArrivalDropdown && filteredAirports.length > 0">
+                    <div class="airport-option" 
+                         *ngFor="let airport of filteredAirports"
+                         (click)="onAirportSelect(airport, 'arrival')">
+                      {{ getAirportDisplay(airport) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="departureDate">Departure Date</label>
+                  <input type="date" id="departureDate" formControlName="departureDate">
+                </div>
+                <div class="form-group">
+                  <label for="returnDate">Return Date</label>
+                  <input type="date" id="returnDate" formControlName="returnDate">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group" formGroupName="passengers">
+                  <label>Passengers</label>
+                  <div class="passenger-controls">
+                    <div class="passenger-type">
+                      <span>Adults</span>
+                      <button type="button" (click)="decrementPassenger('adults')">-</button>
+                      <span>{{flightForm.get('passengers.adults')?.value}}</span>
+                      <button type="button" (click)="incrementPassenger('adults')">+</button>
+                    </div>
+                    <div class="passenger-type">
+                      <span>Children</span>
+                      <button type="button" (click)="decrementPassenger('children')">-</button>
+                      <span>{{flightForm.get('passengers.children')?.value}}</span>
+                      <button type="button" (click)="incrementPassenger('children')">+</button>
+                    </div>
+                    <div class="passenger-type">
+                      <span>Infants</span>
+                      <button type="button" (click)="decrementPassenger('infants')">-</button>
+                      <span>{{flightForm.get('passengers.infants')?.value}}</span>
+                      <button type="button" (click)="incrementPassenger('infants')">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Search Button -->
+              <div class="text-center mt-4">
+                <button type="submit" 
+                        class="btn btn-primary btn-lg px-5"
+                        [disabled]="loading || flightForm.invalid">
+                  <i class="fas fa-search me-2"></i>
+                  {{loading ? 'Searching...' : 'Search Flights'}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Flight Results Section -->
+<section class="flight-results-section py-5" *ngIf="searchPerformed">
+  <div class="container">
+    <div class="row">
+      <!-- Filters Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm border-0 rounded-lg">
+          <div class="card-body">
+            <h5 class="card-title mb-4">Filters</h5>
+            
+            <!-- Airlines Filter -->
+            <div class="filter-section mb-4">
+              <h6 class="filter-title">Airlines</h6>
+              <div class="form-check" *ngFor="let airline of availableAirlines">
+                <input class="form-check-input" 
+                       type="checkbox" 
+                       [id]="'airline-' + airline.code"
+                       [checked]="airline.selected"
+                       (change)="toggleAirlineFilter(airline)">
+                <label class="form-check-label" [for]="'airline-' + airline.code">
+                  <img [src]="airline.logo" 
+                       [alt]="airline.name" 
+                       class="airline-logo me-2">
+                  {{airline.name}}
+                </label>
+              </div>
+            </div>
+            
+            <!-- Stops Filter -->
+            <div class="filter-section mb-4">
+              <h6 class="filter-title">Stops</h6>
+              <div class="form-check" *ngFor="let stop of filterOptions.stops">
+                <input class="form-check-input" 
+                       type="checkbox" 
+                       [id]="'stop-' + stop"
+                       [checked]="isStopSelected(stop)"
+                       (change)="filterFlights()">
+                <label class="form-check-label" [for]="'stop-' + stop">
+                  {{getStopsLabel(stop)}}
+                </label>
+              </div>
+            </div>
+            
+            <!-- Price Range Filter -->
+            <div class="filter-section mb-4">
+              <h6 class="filter-title">Price Range</h6>
+              <div class="price-range">
+                <input type="range" 
+                       class="form-range" 
+                       [min]="filterOptions.priceRange[0]"
+                       [max]="filterOptions.priceRange[1]"
+                       [(ngModel)]="filterOptions.priceRange[1]"
+                       (change)="filterFlights()">
+                <div class="d-flex justify-content-between">
+                  <span>${{filterOptions.priceRange[0]}}</span>
+                  <span>${{filterOptions.priceRange[1]}}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Reset Filters -->
+            <button type="button" 
+                    class="btn btn-outline-secondary w-100"
+                    (click)="resetFilters()">
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Flight Results -->
+      <div class="col-lg-9">
+        <!-- Sort Options -->
+        <div class="sort-options mb-4">
+          <div class="btn-group">
+            <button type="button" 
+                    class="btn btn-outline-secondary"
+                    [class.active]="sortOption === 'price'"
+                    (click)="changeSortOption('price')">
+              Price
+            </button>
+            <button type="button" 
+                    class="btn btn-outline-secondary"
+                    [class.active]="sortOption === 'duration'"
+                    (click)="changeSortOption('duration')">
+              Duration
+            </button>
+            <button type="button" 
+                    class="btn btn-outline-secondary"
+                    [class.active]="sortOption === 'departure'"
+                    (click)="changeSortOption('departure')">
+              Departure
+            </button>
+            <button type="button" 
+                    class="btn btn-outline-secondary"
+                    [class.active]="sortOption === 'arrival'"
+                    (click)="changeSortOption('arrival')">
+              Arrival
+            </button>
+          </div>
+        </div>
+        
+        <!-- Flight Cards -->
+        <div class="flight-cards">
+          <div class="card shadow-sm border-0 rounded-lg mb-4" *ngFor="let flight of filteredFlights">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <!-- Airline Info -->
+                <div class="col-md-2 text-center">
+                  <img [src]="flight.airline.logo" 
+                       [alt]="flight.airline.name" 
+                       class="airline-logo mb-2">
+                  <div class="airline-name">{{flight.airline.name}}</div>
+                  <div class="flight-number">{{flight.id}}</div>
+                </div>
+                
+                <!-- Flight Route -->
+                <div class="col-md-7">
+                  <div class="flight-route">
+                    <div class="route-point departure">
+                      <div class="time">{{flight.departure.time}}</div>
+                      <div class="airport">
+                        <strong>{{flight.departure.airport}}</strong>
+                      </div>
+                    </div>
+                    
+                    <div class="route-line">
+                      <div class="duration">{{flight.duration}}</div>
+                      <div class="stops">{{getStopsLabel(flight.stops)}}</div>
+                    </div>
+                    
+                    <div class="route-point arrival">
+                      <div class="time">{{flight.arrival.time}}</div>
+                      <div class="airport">
+                        <strong>{{flight.arrival.airport}}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Price and Book Button -->
+                <div class="col-md-3 text-center">
+                  <div class="price mb-2">
+                    <span class="currency">$</span>
+                    <span class="amount">{{flight.price}}</span>
+                  </div>
+                  <button type="button" 
+                          class="btn btn-primary w-100"
+                          (click)="bookFlight(flight)">
+                    Book Now
+                  </button>
+                  <div class="available-seats small text-muted mt-2">
+                    {{flight.availableSeats}} seats left
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Flight Features -->
+              <div class="flight-features mt-3">
+                <div class="feature" *ngFor="let feature of flight.features">
+                  <i class="fas fa-check-circle text-success me-1"></i>
+                  {{feature}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- No Results Message -->
+        <div class="text-center py-5" *ngIf="filteredFlights.length === 0">
+          <i class="fas fa-search fa-3x text-muted mb-3"></i>
+          <h4>No flights found</h4>
+          <p class="text-muted">Try adjusting your search criteria or filters</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

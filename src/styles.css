@@ -1,0 +1,222 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+/* Add your custom global styles below */
+
+/* Global Styles */
+:root {
+  --primary-color: #3b641a;
+  --secondary-color: #ff5d5d;
+  --dark-color: #333;
+  --light-color: #f4f4f4;
+  --success-color: #3b641a;
+  --warning-color: #ffc107;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+.section-padding {
+  padding: 100px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
+.section-title p {
+  color: #777;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2d4e14;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card-title {
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--dark-color);
+}
+
+.card-text {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: 1px solid #eee;
+  padding: 15px 25px;
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.8s ease-in-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-in-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .section-padding {
+    padding: 70px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 50px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 1.8rem;
+  }
+  
+  .btn {
+    padding: 10px 25px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title h2 {
+    font-size: 1.5rem;
+  }
+}

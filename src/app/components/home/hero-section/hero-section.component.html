@@ -1,0 +1,287 @@
+<section class="hero-section" #heroSection>
+  <!-- Slideshow -->
+  <div class="slideshow" [class.active]="slideActive">
+    <div class="slide" [style.background-image]="'url(' + currentSlide.imageUrl + ')'">
+      <div class="slide-content">
+        <h1>{{ currentSlide.title }}</h1>
+        <p>{{ currentSlide.subtitle }}</p>
+        <div class="slide-buttons">
+          <a [routerLink]="currentSlide.primaryButtonLink" class="btn btn-primary">
+            {{ currentSlide.primaryButtonText }}
+          </a>
+          <a [routerLink]="currentSlide.secondaryButtonLink" class="btn btn-secondary">
+            {{ currentSlide.secondaryButtonText }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow-controls">
+      <button class="prev" (click)="prevSlide()" aria-label="Previous slide">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="next" (click)="nextSlide()" aria-label="Next slide">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="slideshow-indicators">
+      <button 
+        *ngFor="let slide of slides; let i = index"
+        [class.active]="i === currentSlideIndex"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-section" [class.fixed]="isSearchBarFixed" #searchSection>
+    <div class="search-container">
+      <!-- Search Tabs -->
+      <div class="search-tabs">
+        <button 
+          *ngFor="let tab of searchTabs"
+          [class.active]="activeTab === tab.id"
+          (click)="setActiveTab(tab.id)"
+          [attr.aria-label]="tab.title"
+        >
+          <i [class]="tab.icon"></i>
+          <span>{{ tab.title }}</span>
+        </button>
+      </div>
+
+      <!-- Search Form -->
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+        <div class="search-input">
+          <i class="fas fa-search"></i>
+          <input 
+            type="text" 
+            formControlName="query"
+            [placeholder]="searchTitle"
+            aria-label="Search query"
+          >
+        </div>
+
+        <!-- Dynamic Form Fields -->
+        <ng-container [ngSwitch]="activeTab">
+          <!-- Hotels Search -->
+          <ng-container *ngSwitchCase="'hotels'">
+            <div class="form-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="Where are you going?"
+                aria-label="Location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="Check-in"
+                aria-label="Check-in date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkOut"
+                placeholder="Check-out"
+                aria-label="Check-out date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of guests"
+              >
+            </div>
+          </ng-container>
+
+          <!-- Flights Search -->
+          <ng-container *ngSwitchCase="'flights'">
+            <div class="form-group">
+              <i class="fas fa-plane-departure"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="From"
+                aria-label="Departure location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-plane-arrival"></i>
+              <input 
+                type="text" 
+                formControlName="query"
+                placeholder="To"
+                aria-label="Arrival location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="Departure date"
+                aria-label="Departure date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of passengers"
+              >
+            </div>
+          </ng-container>
+
+          <!-- Activities Search -->
+          <ng-container *ngSwitchCase="'activities'">
+            <div class="form-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="Where?"
+                aria-label="Location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="When?"
+                aria-label="Date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of travelers"
+              >
+            </div>
+          </ng-container>
+
+          <!-- Restaurants Search -->
+          <ng-container *ngSwitchCase="'restaurants'">
+            <div class="form-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="Location"
+                aria-label="Location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="Date"
+                aria-label="Date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of guests"
+              >
+            </div>
+          </ng-container>
+
+          <!-- Vacation Rentals Search -->
+          <ng-container *ngSwitchCase="'rentals'">
+            <div class="form-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="Where are you going?"
+                aria-label="Location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="Check-in"
+                aria-label="Check-in date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkOut"
+                placeholder="Check-out"
+                aria-label="Check-out date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of guests"
+              >
+            </div>
+          </ng-container>
+
+          <!-- Default Search (All) -->
+          <ng-container *ngSwitchDefault>
+            <div class="form-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <input 
+                type="text" 
+                formControlName="location"
+                placeholder="Where are you going?"
+                aria-label="Location"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-calendar"></i>
+              <input 
+                type="date" 
+                formControlName="checkIn"
+                placeholder="When?"
+                aria-label="Date"
+              >
+            </div>
+            <div class="form-group">
+              <i class="fas fa-user"></i>
+              <input 
+                type="number" 
+                formControlName="guests"
+                min="1"
+                aria-label="Number of travelers"
+              >
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <button type="submit" class="search-button" [disabled]="!searchForm.valid">
+          <i class="fas fa-search"></i>
+          <span>Search</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section> 

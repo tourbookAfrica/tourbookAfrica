@@ -1,0 +1,120 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="page-header-content">
+          <h1>Our Gallery</h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header-shape">
+    <img src="assets/images/patterns/shape-bottom.svg" alt="Shape">
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section section-padding">
+  <div class="container">
+    <!-- Filter Buttons -->
+    <div class="gallery-filter text-center mb-5" data-aos="fade-up">
+      <button 
+        *ngFor="let category of categories"
+        class="filter-btn" 
+        [class.active]="selectedCategory === category"
+        (click)="filterImages(category)"
+        (keydown.enter)="filterImages(category)"
+        [attr.aria-pressed]="selectedCategory === category"
+        [attr.aria-label]="'Filter by ' + category">
+        {{category | titlecase}}
+      </button>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="row g-4">
+      <div 
+        *ngFor="let image of filteredImages" 
+        class="col-lg-4 col-md-6"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="100 * (image.id % 3)">
+        <div class="gallery-item" 
+             (click)="openImage(image)"
+             (keyup.enter)="openImage(image)"
+             tabindex="0"
+             role="button"
+             [attr.aria-label]="'View ' + image.title">
+          <div class="gallery-img">
+            <img [src]="image.src" [alt]="image.alt" class="img-fluid">
+            <div class="gallery-overlay">
+              <div class="gallery-info">
+                <h3>{{image.title}}</h3>
+                <p>{{image.location}}</p>
+                <span class="zoom-icon">
+                  <i class="bi bi-zoom-in"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-overlay" 
+     *ngIf="selectedImage" 
+     (click)="closeImage()"
+     (keydown.escape)="closeImage()"
+     (keydown.enter)="closeImage()"
+     (keydown.arrowLeft)="previousImage()"
+     (keydown.arrowRight)="nextImage()"
+     tabindex="0"
+     role="dialog"
+     aria-label="Image lightbox">
+  <div class="lightbox-content" 
+       (click)="$event.stopPropagation()"
+       (keydown)="$event.stopPropagation()"
+       tabindex="0"
+       role="document"
+       aria-label="Image container">
+    <button class="close-btn" 
+            (click)="closeImage()"
+            (keydown.enter)="closeImage()"
+            aria-label="Close lightbox">
+      <i class="bi bi-x-lg"></i>
+    </button>
+    
+    <button class="nav-btn prev-btn" 
+            (click)="previousImage()"
+            (keydown.enter)="previousImage()"
+            aria-label="Previous image">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    
+    <div class="lightbox-img">
+      <img [src]="selectedImage.src" [alt]="selectedImage.alt">
+      <div class="lightbox-caption">
+        <h3>{{selectedImage.title}}</h3>
+        <p>{{selectedImage.location}}</p>
+      </div>
+    </div>
+    
+    <button class="nav-btn next-btn" 
+            (click)="nextImage()"
+            (keydown.enter)="nextImage()"
+            aria-label="Next image">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Newsletter Section -->
+<app-newsletter></app-newsletter> 

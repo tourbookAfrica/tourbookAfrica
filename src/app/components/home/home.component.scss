@@ -1,0 +1,387 @@
+/* Welcome Section */
+.welcome-section {
+  background-color: #fff;
+}
+
+.welcome-content .lead {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.welcome-features {
+  margin-top: 30px;
+}
+
+.feature-item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.feature-icon i {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.feature-text h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--dark-color);
+}
+
+.feature-text p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.welcome-image {
+  position: relative;
+  padding: 20px;
+}
+
+.welcome-image .main-image {
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.image-box {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 5px solid white;
+}
+
+.image-box-1 {
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 180px;
+}
+
+.image-box-2 {
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 150px;
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experience-badge {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge .years {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.experience-badge .text {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* Why Choose Us Section */
+.why-choose-us {
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.why-choose-us::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/patterns/pattern-dots.svg');
+  background-repeat: repeat;
+  opacity: 0.05;
+}
+
+.choose-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.choose-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.choose-icon {
+  width: 70px;
+  height: 70px;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.choose-icon i {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
+
+.choose-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--dark-color);
+}
+
+.choose-card p {
+  color: #666;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+/* Stats Section */
+.stats-section {
+  background-color: var(--primary-color);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/patterns/pattern-mountains.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  opacity: 0.1;
+}
+
+.stat-item {
+  text-align: center;
+  color: white;
+}
+
+.stat-icon {
+  margin-bottom: 15px;
+}
+
+.stat-icon i {
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+
+.stat-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Instagram Feed */
+.instagram-feed {
+  background-color: #fff;
+}
+
+.instagram-item {
+  position: relative;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.instagram-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.instagram-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.instagram-overlay i {
+  color: white;
+  font-size: 2rem;
+}
+
+.instagram-item:hover img {
+  transform: scale(1.1);
+}
+
+.instagram-item:hover .instagram-overlay {
+  opacity: 1;
+}
+
+@media (max-width: 992px) {
+  .welcome-image {
+    margin-top: 40px;
+  }
+  
+  .image-box-1 {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .image-box-2 {
+    width: 170px;
+    height: 130px;
+  }
+  
+  .experience-badge {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .experience-badge .years {
+    font-size: 1.8rem;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .stat-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-image {
+    padding: 10px;
+  }
+  
+  .image-box-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .image-box-2 {
+    width: 140px;
+    height: 100px;
+  }
+  
+  .experience-badge {
+    width: 90px;
+    height: 90px;
+    bottom: 30px;
+  }
+  
+  .experience-badge .years {
+    font-size: 1.5rem;
+  }
+  
+  .experience-badge .text {
+    font-size: 0.7rem;
+  }
+  
+  .stat-item {
+    margin-bottom: 30px;
+  }
+}
+
+// Section spacing
+section {
+  padding: 5rem 0;
+  
+  &:nth-child(even) {
+    background-color: var(--bs-light);
+  }
+}
+
+// Section headers
+.section-header {
+  margin-bottom: 3rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--bs-dark);
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: var(--bs-gray-600);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  section {
+    padding: 3rem 0;
+  }
+  
+  .section-header {
+    margin-bottom: 2rem;
+    
+    h2 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+}

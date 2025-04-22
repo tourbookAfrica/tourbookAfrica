@@ -1,0 +1,69 @@
+<header class="header">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/">
+        <i class="bi bi-globe-africa"></i> TourBook Africa
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="destinationsDropdown" role="button" 
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Destinations
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="destinationsDropdown">
+              <li><a class="dropdown-item" routerLink="/destinations">All Destinations</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" routerLink="/destinations" [queryParams]="{region: 'east'}">East Africa</a></li>
+              <li><a class="dropdown-item" routerLink="/destinations" [queryParams]="{region: 'west'}">West Africa</a></li>
+              <li><a class="dropdown-item" routerLink="/destinations" [queryParams]="{region: 'north'}">North Africa</a></li>
+              <li><a class="dropdown-item" routerLink="/destinations" [queryParams]="{region: 'south'}">South Africa</a></li>
+              <li><a class="dropdown-item" routerLink="/destinations" [queryParams]="{region: 'central'}">Central Africa</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="experiencesDropdown" role="button" 
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Experiences
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="experiencesDropdown">
+              <li><a class="dropdown-item" routerLink="/packages" [queryParams]="{type: 'safari'}">Safari Adventures</a></li>
+              <li><a class="dropdown-item" routerLink="/packages" [queryParams]="{type: 'beach'}">Beach Getaways</a></li>
+              <li><a class="dropdown-item" routerLink="/packages" [queryParams]="{type: 'cultural'}">Cultural Tours</a></li>
+              <li><a class="dropdown-item" routerLink="/packages" [queryParams]="{type: 'adventure'}">Adventure Activities</a></li>
+              <li><a class="dropdown-item" routerLink="/packages" [queryParams]="{type: 'food'}">Food & Culinary</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/hotels" routerLinkActive="active">Hotels</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/restaurants" routerLinkActive="active">Restaurants</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about" routerLinkActive="active">About Us</a>
+          </li>
+        </ul>
+        
+        <div class="auth-buttons d-flex">
+          <a routerLink="/login" class="btn btn-outline me-2">Sign In</a>
+          <a routerLink="/register" class="btn btn-primary">Register</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

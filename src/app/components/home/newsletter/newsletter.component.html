@@ -1,0 +1,69 @@
+<section class="newsletter" aria-labelledby="newsletter-title">
+  <div class="container">
+    <div class="newsletter-container" data-aos="fade-up">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="newsletter-content">
+            <h2 id="newsletter-title">Subscribe to Our Newsletter</h2>
+            <p>Stay updated with our latest offers, travel tips, and exclusive deals for African adventures.</p>
+            <ul class="newsletter-benefits">
+              <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Exclusive travel deals and discounts</li>
+              <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Expert travel tips and destination guides</li>
+              <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Early access to new tour packages</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="newsletter-form">
+            <form (ngSubmit)="onSubmit()" [formGroup]="newsletterForm" novalidate>
+              <div class="input-group">
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  placeholder="Enter your email address" 
+                  formControlName="email"
+                  [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                  aria-label="Email address"
+                  aria-describedby="email-error"
+                >
+                <button class="btn btn-primary" type="submit" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+                  <span>{{ loading ? 'Subscribing...' : 'Subscribe' }}</span>
+                </button>
+              </div>
+              <div id="email-error" *ngIf="submitted && f.email.errors" class="invalid-feedback d-block">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email || f.email.errors.pattern">Please enter a valid email address</div>
+              </div>
+              <div class="form-check mt-3">
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  id="privacyPolicy" 
+                  formControlName="consent"
+                  [ngClass]="{'is-invalid': submitted && f.consent.errors}"
+                >
+                <label class="form-check-label" for="privacyPolicy">
+                  I agree to receive marketing emails and accept the <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+                </label>
+              </div>
+              <div *ngIf="submitted && f.consent.errors?.required" class="invalid-feedback d-block">
+                You must agree to the privacy policy
+              </div>
+              <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+                <i class="bi bi-check-circle-fill me-2" aria-hidden="true"></i>
+                {{ successMessage }}
+                <button type="button" class="btn-close float-end" (click)="resetForm()" aria-label="Close"></button>
+              </div>
+              <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>
+                {{ errorMessage }}
+                <button type="button" class="btn-close float-end" (click)="resetForm()" aria-label="Close"></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

@@ -1,0 +1,96 @@
+<footer class="footer bg-dark text-white">
+  <div class="container">
+    <div class="row py-5">
+      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+        <h5 class="footer-heading">About TourBook Africa</h5>
+        <p class="footer-text">
+          We are dedicated to providing exceptional travel experiences across the African continent, 
+          connecting travelers with authentic adventures and unforgettable destinations.
+        </p>
+        <div class="social-icons">
+          <a *ngFor="let social of socialMediaLinks" 
+             [href]="social.url" 
+             class="social-icon" 
+             [attr.aria-label]="social.ariaLabel">
+            <i [class]="'bi ' + social.icon"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+        <h5 class="footer-heading">Destinations</h5>
+        <ul class="footer-links">
+          <li><a routerLink="/destinations" [queryParams]="{country: 'uganda'}">Uganda</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'kenya'}">Kenya</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'tanzania'}">Tanzania</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'rwanda'}">Rwanda</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'south-africa'}">South Africa</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'morocco'}">Morocco</a></li>
+          <li><a routerLink="/destinations" [queryParams]="{country: 'egypt'}">Egypt</a></li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+        <h5 class="footer-heading">Travel Types</h5>
+        <ul class="footer-links">
+          <li><a routerLink="/packages" [queryParams]="{type: 'safari'}">Safari Adventures</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'beach'}">Beach Getaways</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'cultural'}">Cultural Tours</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'adventure'}">Adventure Travel</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'luxury'}">Luxury Travel</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'family'}">Family Vacations</a></li>
+          <li><a routerLink="/packages" [queryParams]="{type: 'honeymoon'}">Honeymoon Packages</a></li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+        <h5 class="footer-heading">Support</h5>
+        <ul class="footer-links">
+          <li><a routerLink="/contact">Contact Us</a></li>
+          <li><a routerLink="/faq">FAQs</a></li>
+          <li><a routerLink="/terms">Terms & Conditions</a></li>
+          <li><a routerLink="/privacy">Privacy Policy</a></li>
+          <li><a routerLink="/booking-policy">Booking Policy</a></li>
+          <li><a routerLink="/safety">Travel Safety</a></li>
+        </ul>
+        
+        <div class="mt-4">
+          <h5 class="footer-heading">Newsletter</h5>
+          <p class="footer-text">Subscribe to get special offers and travel tips</p>
+          <form [formGroup]="newsletterForm" (ngSubmit)="subscribeToNewsletter()">
+            <div class="input-group">
+              <input type="email" 
+                     class="form-control" 
+                     placeholder="Your email address" 
+                     formControlName="email"
+                     [class.is-invalid]="newsletterForm.get('email')?.invalid && newsletterForm.get('email')?.touched">
+              <button class="btn btn-primary" 
+                      type="submit" 
+                      [disabled]="newsletterForm.invalid || isSubmitting">
+                {{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}
+              </button>
+            </div>
+            <div *ngIf="subscriptionMessage" class="mt-2 text-success">
+              {{ subscriptionMessage }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom py-3 border-top border-secondary">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="mb-0">&copy; {{currentYear}} TourBook Africa. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <p class="mb-0">
+            <a href="/terms">Terms</a> | 
+            <a href="/privacy">Privacy</a> | 
+            <a href="/cookies">Cookies</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

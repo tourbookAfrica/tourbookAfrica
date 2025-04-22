@@ -1,0 +1,115 @@
+<section class="testimonials section-padding">
+  <div class="container">
+    <div class="section-title text-center" data-aos="fade-up">
+      <h2>What Our Travelers Say</h2>
+      <p>Authentic reviews from travelers who experienced Africa with us</p>
+    </div>
+    
+    <!-- Tour Filter -->
+    <div class="tour-filter" data-aos="fade-up" data-aos-delay="100">
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'all'"
+        (click)="filterByTour('all')"
+        aria-label="Show all testimonials">
+        All Tours
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'Uganda Gorilla Safari'"
+        (click)="filterByTour('Uganda Gorilla Safari')"
+        aria-label="Show Uganda Gorilla Safari testimonials">
+        Uganda Safari
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'Serengeti Migration Explorer'"
+        (click)="filterByTour('Serengeti Migration Explorer')"
+        aria-label="Show Serengeti Migration testimonials">
+        Serengeti
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'Zanzibar Beach Retreat'"
+        (click)="filterByTour('Zanzibar Beach Retreat')"
+        aria-label="Show Zanzibar Beach testimonials">
+        Zanzibar
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'Victoria Falls Adventure'"
+        (click)="filterByTour('Victoria Falls Adventure')"
+        aria-label="Show Victoria Falls testimonials">
+        Victoria Falls
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="activeFilter === 'Kenya Cultural Safari'"
+        (click)="filterByTour('Kenya Cultural Safari')"
+        aria-label="Show Kenya Cultural Safari testimonials">
+        Kenya Safari
+      </button>
+    </div>
+    
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading" data-aos="fade-up">
+      <div class="loading-spinner"></div>
+      <p>Loading testimonials...</p>
+    </div>
+    
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error" data-aos="fade-up">
+      <div class="error-message">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>{{ errorMessage || 'Failed to load testimonials. Please try again.' }}</p>
+        <button class="retry-btn" (click)="retryLoading()">Try Again</button>
+      </div>
+    </div>
+    
+    <!-- Testimonial Slider -->
+    <div class="testimonial-slider" *ngIf="!isLoading && !error" data-aos="fade-up">
+      <div class="swiper-container" aria-live="polite">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" *ngFor="let testimonial of filteredTestimonials">
+            <div class="testimonial-card">
+              <div class="testimonial-rating">
+                <i class="bi bi-star-fill" *ngFor="let star of [1,2,3,4,5]"></i>
+              </div>
+              <div class="testimonial-text">
+                <p>"{{testimonial.text}}"</p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-image">
+                  <img 
+                    [src]="testimonial.imageUrl" 
+                    [alt]="testimonial.name"
+                    (error)="onImageError($event)"
+                    loading="lazy">
+                </div>
+                <div class="author-info">
+                  <h4>{{testimonial.name}}</h4>
+                  <p>{{testimonial.location}}</p>
+                  <span class="tour-name">{{testimonial.tourName}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination" aria-label="Testimonial pagination"></div>
+      </div>
+      <div class="swiper-button-next" aria-label="Next testimonial"></div>
+      <div class="swiper-button-prev" aria-label="Previous testimonial"></div>
+    </div>
+    
+    <!-- No Results Message -->
+    <div class="no-results" *ngIf="!isLoading && !error && filteredTestimonials.length === 0" data-aos="fade-up">
+      <i class="bi bi-search"></i>
+      <p>No testimonials found for this tour</p>
+      <button class="reset-btn" (click)="filterByTour('all')">Show All Testimonials</button>
+    </div>
+    
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a routerLink="/reviews" class="btn btn-outline">Read More Reviews</a>
+    </div>
+  </div>
+</section> 
